@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 
 const baseContainer = {
   alignItems: 'center',
@@ -15,7 +15,7 @@ const baseText = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#f2f2f2',
     ...baseContainer,
   },
   specialContainer: {
@@ -30,10 +30,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const Button = ({ text, special }) => (
-  <View style={special ? styles.specialContainer : styles.container}>
+const Button = ({ text, special, onPress }) => (
+  <TouchableOpacity
+    onPress={() => onPress(text)}
+    style={special ? styles.specialContainer : styles.container}
+  >
     <Text style={special ? styles.specialText : styles.text}>{text}</Text>
-  </View>
+  </TouchableOpacity>
 );
 
 export default Button;
