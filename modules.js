@@ -9,6 +9,7 @@
 
 const PRESS_NUM = 'PRESS_NUM';
 const ENTER = 'ENTER';
+const OPERATION = 'OPERATION';
 
 // action
 export const pressNum = n => ({
@@ -20,6 +21,11 @@ export const enter = () => ({
   type: ENTER,
 });
 
+export const operation = op => ({
+  type: OPERATION,
+  payload: op,
+});
+
 // inputState = append | replace | push
 
 // a = [1, 3];
@@ -27,8 +33,32 @@ export const enter = () => ({
 // c = [...a, ...b];
 // c = [1, 3, 2];
 
+const doOperation = (x, y, op) => {
+  const a = parseFloat(x);
+  const b = parseFloat(y);
+  if (op === 'pow') {
+    return b ** a;
+  } else if (op === '+') {
+    return b + a;
+  } else if (op === '-') {
+    return b - a;
+  } else if (op === 'X') {
+    return b * a;
+  } else if (op === '/') {
+    return b / a;
+  }
+
+  return 0;
+};
+
 export const reducer = (state = { stack: [], inputState: 'replace' }, { type, payload }) => {
   switch (type) {
+    case OPERATION:
+      return {
+        stack: [`${doOperation(state.stack[0], state.stack[1], payload)}`, ...state.stack.slice(2)],
+        inputState: 'push',
+      };
+      break;
     case ENTER:
       return {
         stack: [state.stack[0] || '0', ...state.stack],
@@ -43,6 +73,11 @@ export const reducer = (state = { stack: [], inputState: 'replace' }, { type, pa
       } else if (state.inputState === 'replace') {
         return {
           stack: [payload, ...state.stack.slice(1)],
+          inputState: 'append',
+        };
+      } else if (state.inputState === 'push') {
+        return {
+          stack: [payload, ...state.stack],
           inputState: 'append',
         };
       }
