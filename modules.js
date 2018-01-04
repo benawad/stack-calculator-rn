@@ -10,6 +10,9 @@
 const PRESS_NUM = 'PRESS_NUM';
 const ENTER = 'ENTER';
 const OPERATION = 'OPERATION';
+const CLEAR = 'CLEAR';
+const SWAP = 'SWAP';
+const TOGGLE_NEGATIVE = 'TOGGLE_NEGATIVE';
 
 // action
 export const pressNum = n => ({
@@ -24,6 +27,19 @@ export const enter = () => ({
 export const operation = op => ({
   type: OPERATION,
   payload: op,
+});
+
+export const clear = () => ({
+  type: CLEAR,
+});
+
+export const swap = () => ({
+  type: SWAP,
+});
+
+export const toggleNegative = idx => ({
+  type: TOGGLE_NEGATIVE,
+  payload: idx,
 });
 
 // inputState = append | replace | push
@@ -51,14 +67,34 @@ const doOperation = (x, y, op) => {
   return 0;
 };
 
-export const reducer = (state = { stack: [], inputState: 'replace' }, { type, payload }) => {
+const initialState = { stack: [], inputState: 'replace' };
+
+const switchNegative = (x) => {
+  if (x.startsWith('-')) {
+    return x.slice(1);
+  }
+  return `-${x}`;
+};
+
+export const reducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case TOGGLE_NEGATIVE:
+      return {
+        stack: state.stack.map((x, i) => (payload === i ? switchNegative(x) : x)),
+        inputState: state.inputState,
+      };
+    case SWAP:
+      return {
+        stack: [state.stack[1], state.stack[0], ...state.stack.slice(2)],
+        inputState: 'push',
+      };
+    case CLEAR:
+      return initialState;
     case OPERATION:
       return {
         stack: [`${doOperation(state.stack[0], state.stack[1], payload)}`, ...state.stack.slice(2)],
         inputState: 'push',
       };
-      break;
     case ENTER:
       return {
         stack: [state.stack[0] || '0', ...state.stack],

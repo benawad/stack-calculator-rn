@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { pressNum, enter, operation } from './modules';
+import { pressNum, enter, operation, clear, swap, toggleNegative } from './modules';
 import Button from './Button';
 
 const baseNumber = {
@@ -50,18 +50,27 @@ const App = ({
   operationAction,
   pressNumWithDispatch,
   enterAction,
+  clearAction,
+  swapAction,
+  toggleNegativeAction,
 }) => (
   <View style={styles.container}>
     <View style={styles.top}>
-      <Text style={styles.append}>{stack[2] || 0}</Text>
-      <Text style={styles.append}>{stack[1] || 0}</Text>
-      <Text style={styles[inputState]}>{stack[0] || 0}</Text>
+      <TouchableOpacity onPress={() => toggleNegativeAction(2)}>
+        <Text style={styles.append}>{stack[2] || 0}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => toggleNegativeAction(1)}>
+        <Text style={styles.append}>{stack[1] || 0}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => toggleNegativeAction(0)}>
+        <Text style={styles[inputState]}>{stack[0] || 0}</Text>
+      </TouchableOpacity>
     </View>
     <View style={styles.bottom}>
       <View style={styles.row}>
-        <Button text="clear" />
+        <Button text="clear" onPress={clearAction} />
         <Button text="pow" onPress={operationAction} />
-        <Button text="swap" />
+        <Button text="swap" onPress={swapAction} />
         <Button text="/" onPress={operationAction} />
       </View>
       <View style={styles.row}>
@@ -99,6 +108,9 @@ export default connect(
         pressNumWithDispatch: pressNum,
         enterAction: enter,
         operationAction: operation,
+        clearAction: clear,
+        swapAction: swap,
+        toggleNegativeAction: toggleNegative,
       },
       dispatch,
     ),
