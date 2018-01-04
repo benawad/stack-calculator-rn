@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { pressNum } from './modules';
+import { pressNum, enter } from './modules';
 import Button from './Button';
 
 const styles = StyleSheet.create({
@@ -34,12 +34,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const App = ({ currentNumber, pressNumWithDispatch }) => (
+const App = ({ calculatorState: { stack, inputState }, pressNumWithDispatch, enterAction }) => (
   <View style={styles.container}>
     <View style={styles.top}>
-      <Text style={styles.number}>0</Text>
-      <Text style={styles.number}>0</Text>
-      <Text style={styles.number}>{currentNumber}</Text>
+      <Text style={styles.number}>{stack[2] || 0}</Text>
+      <Text style={styles.number}>{stack[1] || 0}</Text>
+      <Text style={styles.number}>{stack[0] || 0}</Text>
     </View>
     <View style={styles.bottom}>
       <View style={styles.row}>
@@ -55,32 +55,33 @@ const App = ({ currentNumber, pressNumWithDispatch }) => (
         <Button text="X" />
       </View>
       <View style={styles.row}>
-        <Button text="6" />
-        <Button text="5" />
-        <Button text="4" />
+        <Button text="6" onPress={pressNumWithDispatch} />
+        <Button text="5" onPress={pressNumWithDispatch} />
+        <Button text="4" onPress={pressNumWithDispatch} />
         <Button text="-" />
       </View>
       <View style={styles.row}>
-        <Button text="3" />
-        <Button text="2" />
-        <Button text="1" />
+        <Button text="3" onPress={pressNumWithDispatch} />
+        <Button text="2" onPress={pressNumWithDispatch} />
+        <Button text="1" onPress={pressNumWithDispatch} />
         <Button text="+" />
       </View>
       <View style={styles.row}>
-        <Button text="0" />
+        <Button text="0" onPress={pressNumWithDispatch} />
         <Button text="." />
-        <Button text="enter" special />
+        <Button text="enter" onPress={enterAction} special />
       </View>
     </View>
   </View>
 );
 
 export default connect(
-  state => ({ currentNumber: state }),
+  state => ({ calculatorState: state }),
   dispatch =>
     bindActionCreators(
       {
         pressNumWithDispatch: pressNum,
+        enterAction: enter,
       },
       dispatch,
     ),
