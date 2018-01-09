@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Platform, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -11,16 +11,18 @@ const baseNumber = {
   textAlign: 'right',
   padding: 10,
   fontSize: 40,
-  borderBottomWidth: 1,
-  borderColor: '#fff',
 };
 
 const styles = StyleSheet.create({
+  bottomBorder: {
+    borderBottomWidth: 1,
+    borderColor: '#fff',
+  },
   container: {
     flex: 1,
   },
   top: {
-    paddingTop: 20,
+    paddingTop: Platform.OS === 'ios' ? 32 : 20,
   },
   bottom: {
     flex: 1,
@@ -56,10 +58,10 @@ const App = ({
 }) => (
   <View style={styles.container}>
     <View style={styles.top}>
-      <TouchableOpacity onPress={() => toggleNegativeAction(2)}>
+      <TouchableOpacity style={styles.bottomBorder} onPress={() => toggleNegativeAction(2)}>
         <Text style={styles.append}>{stack[2] || 0}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => toggleNegativeAction(1)}>
+      <TouchableOpacity style={styles.bottomBorder} onPress={() => toggleNegativeAction(1)}>
         <Text style={styles.append}>{stack[1] || 0}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => toggleNegativeAction(0)}>
