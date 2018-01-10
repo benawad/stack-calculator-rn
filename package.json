@@ -28,6 +28,7 @@
     "expo": "^23.0.4",
     "react": "16.0.0",
     "react-native": "0.50.3",
+    "react-native-animatable": "^1.2.4",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2"
   }
