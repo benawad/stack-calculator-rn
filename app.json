@@ -3,6 +3,13 @@
     "name": "Stack Calculator",
     "icon": "./logo.png",
     "description": "A reverse polish notation calculator.",
-    "sdkVersion": "23.0.0"
+    "sdkVersion": "23.0.0",
+    "version": "1.0.0",
+    "ios": {
+      "bundleIdentifier": "com.benawad.stackcalculator"
+    },
+    "android": {
+      "package": "com.benawad.stackcalculator"
+    }
   }
 }
