@@ -5,6 +5,7 @@
     "description": "A reverse polish notation calculator.",
     "sdkVersion": "23.0.0",
     "version": "1.0.0",
+    "orientation": "portrait",
     "ios": {
       "bundleIdentifier": "com.benawad.stackcalculator"
     },

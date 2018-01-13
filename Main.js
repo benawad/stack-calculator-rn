@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   },
   top: {
     paddingTop: Platform.OS === 'ios' ? 32 : 20,
+    backgroundColor: '#333',
   },
   bottom: {
     flex: 1,
@@ -59,13 +60,22 @@ const App = ({
   <View style={styles.container}>
     <View style={styles.top}>
       <TouchableOpacity style={styles.bottomBorder} onPress={() => toggleNegativeAction(2)}>
-        <Text style={styles.append}>{stack[2] || 0}</Text>
+        <Text numberOfLines={1} style={styles.append}>
+          {'  '}
+          {stack[2] || 0}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.bottomBorder} onPress={() => toggleNegativeAction(1)}>
-        <Text style={styles.append}>{stack[1] || 0}</Text>
+        <Text numberOfLines={1} style={styles.append}>
+          {'  '}
+          {stack[1] || 0}
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => toggleNegativeAction(0)}>
-        <Text style={styles[inputState]}>{stack[0] || 0}</Text>
+        <Text numberOfLines={1} style={styles[inputState]}>
+          {'  '}
+          {stack[0] || 0}
+        </Text>
       </TouchableOpacity>
     </View>
     <View style={styles.bottom}>
