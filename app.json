@@ -6,11 +6,14 @@
     "sdkVersion": "23.0.0",
     "version": "1.0.0",
     "orientation": "portrait",
+    "githubUrl": "https://github.com/benawad/stack-calculator-rn",
+    "privacy": "public",
     "ios": {
       "bundleIdentifier": "com.benawad.stackcalculator"
     },
     "android": {
-      "package": "com.benawad.stackcalculator"
+      "package": "com.benawad.stackcalculator",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.benawad.stackcalculator"
     }
   }
 }
